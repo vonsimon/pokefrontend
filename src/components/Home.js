@@ -17,7 +17,7 @@ const Home = () => {
     const getPokemons = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get(`${process.env.REACT_APP_POKEMON}/pokemon`);
+        const { data } = await axios.get(`${process.env.REACT_APP_POKEMON}`);
         setPokemons(data);
         setLoading(false);
       } catch (error) {
@@ -37,21 +37,24 @@ const Home = () => {
 
   if (error) return <Alert variant='danger'>{error}</Alert>;
   if (loading) return <Spinner animation='border' variant='primary' />;
-  return pokemons.map(post => (
-    <Col md={4} className='mb-4' key={pokemons._id}>
+  return pokemons.map(pokemon => (
+    <Col md={4} className='mb-4' key={pokemon.id}>
       <Card>
-        <Card.Img variant='top' src={pokemons.cover} style={{ objecFit: 'cover' }} />
         <Card.Body>
           <Card.Title>
-            {pokemons.title} <Badge bg='success'>{pokemons.genre}</Badge>
+            {pokemon.name.english} <Badge bg='success'>{pokemon.type}</Badge>
           </Card.Title>
+          <img onError={(event)=> {
+            event.target.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png'
+            event.target.width = '50'
+          }} src={`https://projectpokemon.org/images/normal-sprite/${pokemon.name.english.toLowerCase()}.gif`}/>
           <Card.Text
           ></Card.Text>
-          <Button variant='primary' as={Link} to={`/pokemon/${pokemons._id}`}>
+          <Button variant='primary' as={Link} to={`/pokemon/${pokemon.id}`}>
             Read article
           </Button>
         </Card.Body>
-        <Card.Footer>Author: {pokemons.author}</Card.Footer>
+        <Card.Footer>{pokemon.name.english}</Card.Footer>
       </Card>
     </Col>
   ));

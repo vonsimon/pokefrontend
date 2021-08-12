@@ -13,7 +13,7 @@ const App = () => {
         <Row className='mt-5 justify-content-center'>
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route exact path='/post/:id' component={SinglePokemon} />
+            <Route exact path='/pokemon/:id' component={SinglePokemon} />
             <Route />
           </Switch>
         </Row>
