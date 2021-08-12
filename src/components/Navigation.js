@@ -8,7 +8,7 @@ const Navigation = () => {
     <Navbar bg='light' expand='lg'>
       <Container>
         <Navbar.Brand as={Link} to='/'>
-          Dear diary 📝
+          Poke MONGO
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
@@ -17,7 +17,7 @@ const Navigation = () => {
               Home
             </Nav.Link>
             <Nav.Link as={NavLink} to='/new'>
-              Create new post
+              Choose a Pokemon
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

@@ -9,16 +9,16 @@ import Spinner from 'react-bootstrap/Spinner';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
-  const [posts, setPosts] = useState([]);
+  const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const getPosts = async () => {
+    const getPokemons = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get(`${process.env.REACT_APP_BLOG_API}/posts`);
-        setPosts(data);
+        const { data } = await axios.get(`${process.env.REACT_APP_POKEMON}/pokemon`);
+        setPokemons(data);
         setLoading(false);
       } catch (error) {
         if (error.response) {
@@ -32,27 +32,26 @@ const Home = () => {
         }
       }
     };
-    !error && getPosts();
+    !error && getPokemons();
   }, [error]);
 
   if (error) return <Alert variant='danger'>{error}</Alert>;
   if (loading) return <Spinner animation='border' variant='primary' />;
-  return posts.map(post => (
-    <Col md={4} className='mb-4' key={post._id}>
+  return pokemons.map(post => (
+    <Col md={4} className='mb-4' key={pokemons._id}>
       <Card>
-        <Card.Img variant='top' src={post.cover} style={{ objecFit: 'cover' }} />
+        <Card.Img variant='top' src={pokemons.cover} style={{ objecFit: 'cover' }} />
         <Card.Body>
           <Card.Title>
-            {post.title} <Badge bg='success'>{post.genre}</Badge>
+            {pokemons.title} <Badge bg='success'>{pokemons.genre}</Badge>
           </Card.Title>
           <Card.Text
-            dangerouslySetInnerHTML={{ __html: `${post.body.substring(0, 100)}...` }}
           ></Card.Text>
-          <Button variant='primary' as={Link} to={`/post/${post._id}`}>
+          <Button variant='primary' as={Link} to={`/pokemon/${pokemons._id}`}>
             Read article
           </Button>
         </Card.Body>
-        <Card.Footer>Author: {post.author}</Card.Footer>
+        <Card.Footer>Author: {pokemons.author}</Card.Footer>
       </Card>
     </Col>
   ));

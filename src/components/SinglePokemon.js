@@ -6,18 +6,18 @@ import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 import axios from 'axios';
 
-const SinglePost = () => {
+const SinglePokemon = () => {
   const { id } = useParams();
-  const [post, setPost] = useState({});
+  const [pokemon, setPokemons] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const getPosts = async () => {
+    const getPokemons = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get(`${process.env.REACT_APP_BLOG_API}/posts/${id}`);
-        setPost(data);
+        const { data } = await axios.get(`${process.env.REACT_APP_POKEMON}/pokemon/${id}`);
+        setPokemons(data);
         setLoading(false);
       } catch (error) {
         if (error.response) {
@@ -31,7 +31,7 @@ const SinglePost = () => {
         }
       }
     };
-    !error && getPosts();
+    !error && getPokemons();
   }, [id, error]);
 
   if (error) return <Alert variant='danger'>{error}</Alert>;
@@ -40,16 +40,16 @@ const SinglePost = () => {
   return (
     <Col>
       <div className='cover-box'>
-        <img src={post.cover} className='cover-img' alt={post.title} />
+        <img src={pokemon.cover} className='cover-img' alt={pokemon.title} />
         <div className='cover-overlay'>
-          <h3>{post.title}</h3>
+          <h3>{pokemon.title}</h3>
         </div>
       </div>
       <Row className='mt-5'>
-        <Col dangerouslySetInnerHTML={{ __html: post.body }}></Col>
+        <Col dangerouslySetInnerHTML={{ __html: pokemon.body }}></Col>
       </Row>
     </Col>
   );
 };
 
-export default SinglePost;
+export default SinglePokemon;
